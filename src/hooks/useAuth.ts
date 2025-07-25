@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { loginUser, registerUser } from '../api';
 
 export interface User {
   id: string;
@@ -27,35 +28,23 @@ export const useAuth = () => {
   }, [user]);
 
   const login = async (email: string, password: string) => {
-    // Mock login - in real app, this would call your API
-    const mockUser: User = {
-      id: '1',
-      name: 'Alex Johnson',
-      email,
-      role: email.includes('admin') ? 'admin' : 'student',
-      college: 'MIT',
-      branch: 'Computer Science',
-      year: 3,
-      achievements: ['academic-excellence', 'community-contributor']
-    };
-    setUser(mockUser);
-    return mockUser;
+    try {
+      const data = await loginUser(email, password);
+      setUser(data.user);
+      return data.user;
+    } catch (error: any) {
+      throw error.response?.data?.message || 'Login failed';
+    }
   };
 
   const register = async (userData: Partial<User> & { password: string }) => {
-    // Mock registration - in real app, this would call your API
-    const newUser: User = {
-      id: Date.now().toString(),
-      name: userData.name || '',
-      email: userData.email || '',
-      role: 'student',
-      college: userData.college || '',
-      branch: userData.branch || '',
-      year: userData.year || 1,
-      achievements: []
-    };
-    setUser(newUser);
-    return newUser;
+    try {
+      const data = await registerUser(userData);
+      setUser(data.user);
+      return data.user;
+    } catch (error: any) {
+      throw error.response?.data?.message || 'Registration failed';
+    }
   };
 
   const logout = () => {

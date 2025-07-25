@@ -26,13 +26,14 @@ export const AuthModal: React.FC<AuthModalProps> = ({
     branch: '',
     year: 1
   });
+  const [error, setError] = useState<string | null>(null);
 
   if (!isOpen) return null;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-
+    setError(null);
     try {
       if (mode === 'login') {
         await onLogin(formData.email, formData.password);
@@ -40,8 +41,8 @@ export const AuthModal: React.FC<AuthModalProps> = ({
         await onRegister(formData);
       }
       onClose();
-    } catch (error) {
-      console.error('Auth error:', error);
+    } catch (error: any) {
+      setError(error?.toString() || 'Authentication failed');
     } finally {
       setLoading(false);
     }
@@ -84,6 +85,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
+            {error && <div className="text-red-500 text-center">{error}</div>}
             {mode === 'register' && (
               <>
                 <div>

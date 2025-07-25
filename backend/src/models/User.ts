@@ -61,9 +61,12 @@ userSchema.index({ createdAt: -1 });
 // Hash password before saving
 userSchema.pre('save', async function(next) {
   if (!this.isModified('password')) return next();
-  
+
   try {
     const salt = await bcrypt.genSalt(12);
+    if (!this.password) {
+      throw new Error('Password is required for hashing');
+    }
     this.password = await bcrypt.hash(this.password, salt);
     next();
   } catch (error) {

@@ -11,6 +11,7 @@ import {
   Filter,
   Plus
 } from 'lucide-react';
+import { api } from '../api';
 
 interface Post {
   id: string;

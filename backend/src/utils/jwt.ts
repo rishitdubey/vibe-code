@@ -3,15 +3,15 @@ import { JWTPayload } from '../types';
 
 export const generateTokens = (payload: JWTPayload) => {
   const accessToken = jwt.sign(
-    payload,
-    process.env.JWT_SECRET!,
-    { expiresIn: process.env.JWT_EXPIRE || '24h' }
+    payload as object,
+    process.env.JWT_SECRET as string,
+    { expiresIn: (process.env.JWT_EXPIRE as string) || '24h' as string }
   );
 
   const refreshToken = jwt.sign(
-    payload,
-    process.env.JWT_REFRESH_SECRET!,
-    { expiresIn: process.env.JWT_REFRESH_EXPIRE || '7d' }
+    payload as object,
+    process.env.JWT_REFRESH_SECRET as string,
+    { expiresIn: (process.env.JWT_REFRESH_EXPIRE as string) || '7d' as string }
   );
 
   return { accessToken, refreshToken };

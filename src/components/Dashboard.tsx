@@ -9,6 +9,7 @@ import {
   Clock,
   Target
 } from 'lucide-react';
+import { api } from '../api';
 
 export const Dashboard: React.FC = () => {
   const stats = [

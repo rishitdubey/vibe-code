@@ -15,6 +15,7 @@ import {
   Grid,
   List
 } from 'lucide-react';
+import { api } from '../api';
 
 interface Resource {
   id: string;

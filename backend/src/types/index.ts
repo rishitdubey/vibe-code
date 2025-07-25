@@ -1,11 +1,12 @@
 import { Request } from 'express';
 import { Document } from 'mongoose';
+import mongoose from 'mongoose';
 
 export interface IUser extends Document {
   _id: string;
   username: string;
   email: string;
-  password: string;
+  password?: string;
   avatar?: string;
   bio?: string;
   isVerified: boolean;
@@ -67,8 +68,8 @@ export interface IAdminVerification extends Document {
   _id: string;
   verificationString: string;
   isUsed: boolean;
-  createdBy: string;
-  usedBy?: string;
+  createdBy: mongoose.Types.ObjectId | string;
+  usedBy?: mongoose.Types.ObjectId | string;
   expiresAt: Date;
   createdAt: Date;
 }

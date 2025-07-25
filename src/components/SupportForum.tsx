@@ -12,6 +12,7 @@ import {
   CheckCircle,
   AlertTriangle
 } from 'lucide-react';
+import { api } from '../api';
 
 interface ForumPost {
   id: string;

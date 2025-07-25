@@ -1,7 +1,7 @@
 import mongoose, { Schema } from 'mongoose';
 import { IAdminVerification } from '../types';
 
-const adminVerificationSchema = new Schema<IAdminVerification>({
+const adminVerificationSchema = new Schema({
   verificationString: {
     type: String,
     required: [true, 'Verification string is required'],
